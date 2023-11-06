@@ -11,14 +11,14 @@ with open("encodings.pickle", "rb") as f:
     name_encodings_dict = pickle.load(f)
 
 # load the input image
-image = cv2.imread("examples/14.png")
+image = cv2.imread("examples/10.jpg")
 # get the 128-d face embeddings for each face in the input image
-encodings = face_encodings(image)
+encodings1 = face_encodings(image)
 # this list will contain the names of each face detected in the image
 names = []
 
 # loop over the encodings
-for encoding in encodings:
+for encoding in encodings1:
     # initialize a dictionary to store the name of the 
     # person and the number of times it was matched
     counts = {}
@@ -26,7 +26,10 @@ for encoding in encodings:
     for (name, encodings) in name_encodings_dict.items():
         # compute the number of matches between the current encoding and the encodings 
         # of the known faces and store the number of matches in the dictionary
-        counts[name] = nb_of_matches(encodings, encoding)
+        if encodings==[]:
+            pass
+        else:
+            counts[name] = nb_of_matches(encodings, encoding)
     # check if all the number of matches are equal to 0
     # if there is no match for any name, then we set the name to "Unknown"
     if all(count == 0 for count in counts.values()):
